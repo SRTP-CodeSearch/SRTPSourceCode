@@ -2,6 +2,7 @@
 public class SimpleClass {
 //this is my changing
 //hehe
+//Master changing
 	public static void main(String args[]){
 		SimpleClass instance_A = new SimpleClass();
 		instance_A.a();

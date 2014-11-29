@@ -1,6 +1,9 @@
 
 public class SimpleClass {
+<<<<<<< HEAD
 //this is my changing
+=======
+>>>>>>> parent of d55b8ca... Revert "testCommit"
 	
 	public static void main(String args[]){
 		SimpleClass instance_A = new SimpleClass();

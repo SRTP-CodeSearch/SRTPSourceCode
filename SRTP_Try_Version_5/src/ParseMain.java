@@ -81,8 +81,7 @@ public class ParseMain {
 		 if(f.isDirectory()){
 			 getClassPath(f);
 		 }
-		 //hehe test github
-		 //hehe2
+
 		 filePath = f.getAbsolutePath();
 		 System.out.println(filePath);
 		 if(f.isFile()){

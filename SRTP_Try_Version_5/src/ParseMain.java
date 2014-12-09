@@ -24,12 +24,14 @@ public class ParseMain {
 		MyNode.prepare();
 		
 		//String AllProjectsFileLocation = "F:/SRTP/AllProjects";		
-		String AllProjectsFileLocation = "C:/SRTP/AllProjects/SimpleProject/";		
+		String AllProjectsFileLocation = "C:/SRTP/testProject";		
 		ParseMain parsemain = new ParseMain();
 		parsemain.parseProjects(AllProjectsFileLocation);
 
 	}
 	public void parseProjects(String projectPathEntries) throws IOException{
+		File projectFolder = new File(projectPathEntries);
+		if(projectFolder.listFiles()!=null){		
 		File [] projectFiles = new File(projectPathEntries).listFiles();
 		for(File f: projectFiles){
 			if(f.isDirectory()){
@@ -43,13 +45,14 @@ public class ParseMain {
 				parserPJ.parse();
 			}
 		}
+		}
 	}
 	/**
 	 * @param file
 	 * @throws IOException
 	 */
 	public  void ParseFilesInDir(File file) throws IOException{	
-		File[] files = file.listFiles ( );
+		File[] files = file.listFiles ();
 		if(files.length==0){
 			file.deleteOnExit();
 		}

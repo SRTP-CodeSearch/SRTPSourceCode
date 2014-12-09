@@ -14,7 +14,7 @@ import org.neo4j.graphdb.schema.Schema;
 
 public abstract class SearchInDb {
 
-	public static String DB_PATH="var/graphDb";
+	public static String DB_PATH="var/demoGraphDb";
 	public static GraphDatabaseService graphDb;
 	protected static IndexDefinition indexDefinition;
 	public Node thisNode;

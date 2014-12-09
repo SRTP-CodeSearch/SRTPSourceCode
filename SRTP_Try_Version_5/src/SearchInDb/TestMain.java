@@ -14,25 +14,27 @@ import org.neo4j.graphdb.Transaction;
 public class TestMain {
 	public static void main(String [] argv) throws IOException{
 		SearchInDb.startDb();
-		//SearchInDb.prepare();
-//		SearchClass sc= new SearchClass();
-//		SearchMethod sm=new SearchMethod();
-//		ArrayList<Node> test=new ArrayList<Node>();
-//		test=sm.searchByName("main"); 
-//		String he=sm.getFileLocation(test.get(1));
-//		System.out.println(he);
-//		File f= new File(he);
-//		System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
-		Label label = DynamicLabel.label( "method" );
-		try ( Transaction tx = SearchInDb.graphDb.beginTx())
-		{
-			for ( Node node : SearchInDb.graphDb.findNodesByLabelAndProperty(label, "type","method" ))
-			{
-			System.out.println(node.getId());
-			tx.success();
-			}
-		
-		}
+//		SearchInDb.prepare();
+		SearchClass sc= new SearchClass();
+		SearchMethod sm=new SearchMethod();
+		ArrayList<Node> test=new ArrayList<Node>();
+		test=sm.searchByName("readFields"); 
+		System.out.println(test.get(0).getId());
+		System.out.println(test.get(1).getId());
+		String he=sm.getFileLocation(test.get(1));
+		System.out.println(he);
+		File f= new File(he);
+		System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
+//		Label label = DynamicLabel.label( "method" );
+//		try ( Transaction tx = SearchInDb.graphDb.beginTx())
+//		{
+//			for ( Node node : SearchInDb.graphDb.findNodesByLabelAndProperty(label, "type","method" ))
+//			{
+//			System.out.println(node.getId());
+//			tx.success();
+//			}
+//		
+//		}
 
 		
 	}

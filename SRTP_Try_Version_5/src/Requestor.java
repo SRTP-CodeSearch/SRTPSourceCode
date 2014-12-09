@@ -260,7 +260,9 @@ public class Requestor extends FileASTRequestor {
 								invokedMethod.createNode(invoked_method_name, paramArray);
 								invokedMethod.setContainRelToMethod(classNode);
 							}
+							if(methodNode.thisNode!=null){
 							invokedMethod.setInvokeRelToMethod(methodNode);
+							}
 						}else{
 							String invokedClassName = node.getExpression().resolveTypeBinding().getName();
 							String invokedPackageName = node.getExpression().resolveTypeBinding().getPackage().getName();
@@ -283,7 +285,10 @@ public class Requestor extends FileASTRequestor {
 								invokedMethod.createNode(MCallLexeme, paramArray);
 								invokedMethod.setContainRelToMethod(invokedClass);
 							}
+							
+							if(methodNode.thisNode!=null){
 							invokedMethod.setInvokeRelToMethod(methodNode);
+							}
 //							System.out.println("MethodInvocation_Expression:"+node.getExpression());
 							
 							//Wait to be modified 
@@ -310,9 +315,11 @@ public class Requestor extends FileASTRequestor {
 						}
 //							System.out.println('\n');
 					} catch(Exception e) {
-						
+						System.out.println(e);
 					}
+					if(methodNode.thisNode!=null){
 					methodNode.setParseState();
+					}
 					return true; // do not continue
 				}
 	

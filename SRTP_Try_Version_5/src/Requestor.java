@@ -60,11 +60,56 @@ public class Requestor extends FileASTRequestor {
 //					packagename=node.getName();
 //					return true;					
 //				}
+				
+				//Parse the enum type
+				public boolean visit(EnumDeclaration node){
+					String nodeName = node.getName().getFullyQualifiedName();
+					String nodePackageName = node.resolveBinding().getPackage().getName();
+					if(classNode.thisNode==null){
+						if(classNode.checkNodeExist(nodeName, nodePackageName, "enum")){
+							if(!node.superInterfaceTypes().isEmpty()){
+								ClassNode implementNode = new ClassNode();
+								for(ITypeBinding iter1 : node.resolveBinding().getInterfaces()){
+									String implemInterfaceName = iter1.getName();
+									String implemPackagename = node.resolveBinding().getPackage().getName();
+									if(implementNode.checkNodeExist(implemInterfaceName, implemPackagename, "interface")){
+										implementNode.setImplementRelToClass(classNode);
+									}else{
+										implementNode.createNode(implemInterfaceName, implemPackagename, "interface");
+										implementNode.setImplementRelToClass(classNode);
+									}
+								}
+							}
+						}else{
+							classNode.createNode(nodeName, nodePackageName, "enum");
+							if(!node.superInterfaceTypes().isEmpty()){
+								ClassNode implementNode = new ClassNode();
+								for(ITypeBinding iter1 : node.resolveBinding().getInterfaces()){
+									String implemInterfaceName = iter1.getName();
+									String implemPackagename = node.resolveBinding().getPackage().getName();
+									if(implementNode.checkNodeExist(implemInterfaceName, implemPackagename, "interface")){
+										implementNode.setImplementRelToClass(classNode);
+									}else{
+										implementNode.createNode(implemInterfaceName, implemPackagename, "interface");
+										implementNode.setImplementRelToClass(classNode);
+									}
+								}
+							}
+						}
+						classNode.setContainRelToClass(projNode);
+					}
+					System.out.println(nodeName);
+					System.out.println(node.resolveBinding().getPackage().getName());
+					return true;
+					
+				}
+				
 				//Show the class and interface name
 				public boolean visit(TypeDeclaration node){
 					String nodeName = node.getName().getFullyQualifiedName();
 					String nodePackageName = node.resolveBinding().getPackage().getName();
 					//node is an interface
+					if(classNode.thisNode==null){
 					if(node.isInterface()==true){
 						System.out.println("Interface:"+node.getName());						
 						ClassNode extendNode = new ClassNode();						
@@ -235,9 +280,12 @@ public class Requestor extends FileASTRequestor {
 						System.out.println("\n");
 					}
 					classNode.setParseState();
+					}
 					return true;
 				}
-//				
+//		
+  
+
 				//Show method invocation 
 				public boolean visit(MethodInvocation node){
 					String MCallLexeme = node.getName().getIdentifier();
@@ -333,9 +381,14 @@ public class Requestor extends FileASTRequestor {
 				            //get method parameters  
 				     String [] param;
 				     ArrayList<String> tempParam = new ArrayList<String>();
-				     for(ITypeBinding iter : node.resolveBinding().getParameterTypes()){
-				    	if(!iter.getQualifiedName().equals(null))
-				    	tempParam.add(iter.getQualifiedName());
+				     try{
+					     for(ITypeBinding iter : node.resolveBinding().getParameterTypes()){
+					    	if(!iter.getQualifiedName().equals(null))
+					    	tempParam.add(iter.getQualifiedName());
+					     } 
+				     }catch(Exception e){
+				    	 System.out.println("There is a exception because of inner class!");
+				    	 return true;
 				     }
 				     param = (String[])tempParam.toArray(new String[tempParam.size()]);
 				     System.out.println("method parameters:"+param); 

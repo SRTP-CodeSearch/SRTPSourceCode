@@ -9,7 +9,8 @@ public class ParseMain {
 	//All classPathEntries
 	public	static ArrayList<String> classPathEntries ;
 	//All classPath 
-	public static String classPathEntriesLocation = "C:/SRTP/ToLaoDuan/dongLib";
+	//public static String classPathEntriesLocation = "C:/SRTP/ToLaoDuan/dongLib";
+	public static String classPathEntriesLocation = "C:/SRTP/AllLibs";
 	//Every project sourcePath
 	public static ArrayList<String> sourcePath;
 	
@@ -23,8 +24,8 @@ public class ParseMain {
 		MyNode.startDb();
 		MyNode.prepare();
 		
-		//String AllProjectsFileLocation = "F:/SRTP/AllProjects";		
-		String AllProjectsFileLocation = "C:/SRTP/ToLaoDuan/DuanProject/";	
+		String AllProjectsFileLocation = "C:/SRTP/AllProjects";		
+		//String AllProjectsFileLocation = "C:/SRTP/ToLaoDuan/DuanProject/";	
 		ParseMain parsemain = new ParseMain();
 		parsemain.parseProjects(AllProjectsFileLocation);
 

@@ -18,13 +18,13 @@ public class TestMain {
 		SearchClass sc= new SearchClass();
 		SearchMethod sm=new SearchMethod();
 		ArrayList<Node> test=new ArrayList<Node>();
-		test=sm.searchByName("readFields"); 
+		test=sm.searchByName("main"); 
 		System.out.println(test.get(0).getId());
-		System.out.println(test.get(1).getId());
-		String he=sm.getFileLocation(test.get(1));
+		//System.out.println(test.get(1).getId());
+		String he=sm.getFileLocation(test.get(0));
 		System.out.println(he);
 		File f= new File(he);
-		System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
+		System.out.println(readFileToString(sm.getFileLocation(test.get(0))));
 //		Label label = DynamicLabel.label( "method" );
 //		try ( Transaction tx = SearchInDb.graphDb.beginTx())
 //		{

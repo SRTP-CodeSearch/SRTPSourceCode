@@ -19,18 +19,28 @@ public class TestMain {
 		SearchMethod sm=new SearchMethod();
 		SearchProject sp=new SearchProject();
 		ArrayList<Node> test=new ArrayList<Node>();
-		test=sm.searchByName("EventObject"); 
+		test=sc.searchByName("ReadObjectState"); 
+		System.out.println(test.size());
 		for(int i=0;i<test.size();i++){
-			System.out.println(test.size());
 			System.out.println(test.get(i).getId());			
-			if(sm.validateParseState(test.get(i))){
-				String he=sm.getFileLocation(test.get(i));
+			if(sc.validateParseState(test.get(i))){
+				String he=sc.getFileLocation(test.get(i));
 				System.out.println(he);
 				File f= new File(he);
-				System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
+				//System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
 			}
 			else{
 				System.out.println("this method hasn't been parsed");
+				String he = null;
+				try {
+					he = sm.getFileLocation(test.get(i));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(he);
+				//File f= new File(he);
+				//System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
 			}
 		}
 

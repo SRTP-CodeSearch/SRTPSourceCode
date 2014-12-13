@@ -124,7 +124,7 @@ public class SearchMethod extends SearchInDb {
 			String packageName=(String)classNode.getProperty("packageName");
 			packageName=packageName.replace('.', '\\');
 			String fileLocation=(String) proNode.getProperty("fileLocation");
-			String classLocation=fileLocation+'\\'+'\\'+packageName+'\\'+(String)classNode.getProperty("className")+".java";	
+			String classLocation=fileLocation+'\\'+packageName+'\\'+(String)classNode.getProperty("className")+".java";	
 			return classLocation;
 			}
 		}

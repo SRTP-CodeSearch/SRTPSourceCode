@@ -15,7 +15,7 @@ import org.neo4j.graphdb.Transaction;
 public class SetMethodPR {
 	public static int nodeNumber;
 	public static double d=0.85;
-	public static double boundary=0.00000003;
+	public static double boundary=0.0000000003;
 	public static List<Long> nodeIdList=new ArrayList<Long>();
 	public void setMethodNodeList(){
 			SearchInDb.startDb();
@@ -121,6 +121,7 @@ public class SetMethodPR {
 	public static void main(String argv[]){
 		SetMethodPR setMethodPR=new SetMethodPR();
 		setMethodPR.setPK();
+		//System.out.println(nodeIdList.size());
 	}
 
 

@@ -30,6 +30,20 @@ public class SearchClass extends SearchInDb {
 		return resultNodes;
 		
 		}
+	//验证函数是否被解析
+	public boolean validateParseState(Node node){
+		try(Transaction tx = graphDb.beginTx()){
+			if(node.getProperty("parseState").equals(true)){
+				tx.success();
+				return true;
+			}
+			else{
+				tx.success();
+				return false;
+			}
+		}
+
+	}
 	//find the classes which use this class
 	public ArrayList<Node> searchUseClass(Node classNode){
 		//wait to be check null or ""

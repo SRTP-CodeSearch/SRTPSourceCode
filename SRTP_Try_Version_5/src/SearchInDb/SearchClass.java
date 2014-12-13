@@ -8,9 +8,7 @@ import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Path;
-
 import org.neo4j.graphdb.Transaction;
-
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.graphdb.traversal.Traverser;
 
@@ -80,8 +78,12 @@ public class SearchClass extends SearchInDb {
 			{
 			classNode.getProperty("className");
 			Node proNode = classNode.getSingleRelationship(RelTypes.CONTAIN, Direction.INCOMING).getStartNode();
+			String packageName=(String)classNode.getProperty("packageName");
+			packageName=packageName.replace('.', '\\');
+			System.out.println(packageName);
 			String fileLocation=(String) proNode.getProperty("fileLocation");
-			return fileLocation;
+			String classLocation=fileLocation+'\\'+"src"+'\\'+packageName+'\\'+(String)classNode.getProperty("className")+".java";	
+			return classLocation;
 			}
 		}
 		catch(NotFoundException e){

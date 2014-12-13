@@ -9,7 +9,8 @@ public class ParseMain {
 	//All classPathEntries
 	public	static ArrayList<String> classPathEntries ;
 	//All classPath 
-	public static String classPathEntriesLocation = "C:/SRTP/AllLibs" ;
+	//public static String classPathEntriesLocation = "C:/SRTP/ToLaoDuan/dongLib";
+	public static String classPathEntriesLocation = "C:/SRTP/AllLibs";
 	//Every project sourcePath
 	public static ArrayList<String> sourcePath;
 	
@@ -23,13 +24,15 @@ public class ParseMain {
 		MyNode.startDb();
 		MyNode.prepare();
 		
-		//String AllProjectsFileLocation = "F:/SRTP/AllProjects";		
-		String AllProjectsFileLocation = "C:/SRTP/AllProjects/SimpleProject/";		
+		String AllProjectsFileLocation = "C:/SRTP/AllProjects";		
+		//String AllProjectsFileLocation = "C:/SRTP/ToLaoDuan/DuanProject/";	
 		ParseMain parsemain = new ParseMain();
 		parsemain.parseProjects(AllProjectsFileLocation);
 
 	}
 	public void parseProjects(String projectPathEntries) throws IOException{
+		File projectFolder = new File(projectPathEntries);
+		if(projectFolder.listFiles()!=null){		
 		File [] projectFiles = new File(projectPathEntries).listFiles();
 		for(File f: projectFiles){
 			if(f.isDirectory()){
@@ -43,13 +46,14 @@ public class ParseMain {
 				parserPJ.parse();
 			}
 		}
+		}
 	}
 	/**
 	 * @param file
 	 * @throws IOException
 	 */
 	public  void ParseFilesInDir(File file) throws IOException{	
-		File[] files = file.listFiles ( );
+		File[] files = file.listFiles ();
 		if(files.length==0){
 			file.deleteOnExit();
 		}
@@ -81,8 +85,7 @@ public class ParseMain {
 		 if(f.isDirectory()){
 			 getClassPath(f);
 		 }
-		 //hehe test github
-		 //hehe2
+
 		 filePath = f.getAbsolutePath();
 		 System.out.println(filePath);
 		 if(f.isFile()){

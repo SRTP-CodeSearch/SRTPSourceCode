@@ -108,7 +108,7 @@ public class SearchMethod extends SearchInDb {
 			Node classNode=methodNode.getSingleRelationship(RelTypes.CONTAIN, Direction.INCOMING).getStartNode();
 			Node proNode = classNode.getSingleRelationship(RelTypes.CONTAIN, Direction.INCOMING).getStartNode();
 			String packageName=(String)classNode.getProperty("packageName");
-			packageName.replace('.', '\\');
+			packageName=packageName.replace('.', '\\');
 			String fileLocation=(String) proNode.getProperty("fileLocation");
 			String classLocation=fileLocation+'\\'+"src"+'\\'+packageName+'\\'+(String)classNode.getProperty("className")+".java";	
 			return classLocation;

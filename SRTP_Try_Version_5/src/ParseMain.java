@@ -20,9 +20,9 @@ public class ParseMain {
 	public  static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		//reset db
-		MyNode.deleteFileOrDirectory(new File(MyNode.DB_PATH));
+		//MyNode.deleteFileOrDirectory(new File(MyNode.DB_PATH));
 		MyNode.startDb();
-		MyNode.prepare();
+		//MyNode.prepare();
 		
 		String AllProjectsFileLocation = "C:/SRTP/AllProjects";		
 		//String AllProjectsFileLocation = "C:/SRTP/ToLaoDuan/DuanProject/";	
@@ -61,6 +61,7 @@ public class ParseMain {
 		String filePath = null; 
 		 for (File f : files ) {
 			 if(f.isDirectory()){
+				 System.out.println(f.getAbsolutePath());
 				 ParseFilesInDir(f);
 			 }
 			 filePath = f.getAbsolutePath();

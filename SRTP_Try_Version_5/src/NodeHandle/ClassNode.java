@@ -38,7 +38,7 @@ public class ClassNode extends MyNode {
 		thisNode.setProperty("parseState",false);
 		thisNode.setProperty( "type", "class" );
 		
-		System.out.println( "ClassNode-name:"+className+" created" );
+		System.out.println( "classNode created" );
 		tx.success();
 		}
 		return thisNode;

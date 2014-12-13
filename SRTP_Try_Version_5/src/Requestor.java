@@ -12,7 +12,11 @@ public class Requestor extends FileASTRequestor {
 			// TODO Auto-generated constructor stub
 		this.projName=projName;
 		projNode = new ProjectNode();
-		projNode.createNode(projName, fileLocation);
+		if(projNode.checkNodeExist(projName, fileLocation)){
+		}
+		else{
+			projNode.createNode(projName, fileLocation);
+		}
 		}
 
 	@Override
@@ -98,7 +102,7 @@ public class Requestor extends FileASTRequestor {
 						}
 						classNode.setContainRelToClass(projNode);
 					}
-					System.out.println("EnumDec_name:"+nodeName);
+					System.out.println(nodeName);
 					System.out.println(node.resolveBinding().getPackage().getName());
 					return true;
 					
@@ -109,7 +113,7 @@ public class Requestor extends FileASTRequestor {
 					String nodeName = node.getName().getFullyQualifiedName();
 					String nodePackageName = node.resolveBinding().getPackage().getName();
 					//node is an interface
-					//if(classNode.thisNode==null){
+					if(classNode.thisNode==null){
 					if(node.isInterface()==true){
 						System.out.println("Interface:"+node.getName());						
 						ClassNode extendNode = new ClassNode();						
@@ -139,10 +143,72 @@ public class Requestor extends FileASTRequestor {
 								}
 							}
 						}
-						System.out.println("InterfaceDec_name:"+node.getName());
 					}
 					//node is an abstract class or a class
 					else {
+						// boolean flag = true;
+						// for(Object iter : node.modifiers()){
+						// 	//node is an abstract class
+						// 	if(iter.toString().equals("abstract")){
+						// 		System.out.println("Abstract_Class:"+nodeName);
+						// 		if(classNode.checkNodeExist(nodeName, nodePackageName, "abstract")){
+						// 			if(node.getSuperclassType()!=null){	
+						// 				ClassNode extendNode = new ClassNode();
+						// 				String extendClassName = node.getSuperclassType().resolveBinding().getName();
+						// 				String extendPackageName = node .getSuperclassType().resolveBinding().getPackage().getName();
+						// 				if(extendNode.checkNodeExist(extendClassName, extendPackageName, "class")){
+						// 					extendNode.setExtendRelToClass(classNode);
+						// 				}else{
+						// 					extendNode.createNode(extendClassName, extendPackageName, "class");
+						// 					extendNode.setExtendRelToClass(classNode);
+						// 				}
+						// 			}
+						// 			if(node.superInterfaceTypes().isEmpty()){								
+						// 			}else{
+						// 				ClassNode implementNode = new ClassNode();
+						// 				for(ITypeBinding iter1 : node.resolveBinding().getInterfaces()){
+						// 					String implemInterfaceName = iter1.getName();
+						// 					String implemPackagename = node.resolveBinding().getPackage().getName();
+						// 					if(implementNode.checkNodeExist(implemInterfaceName, implemPackagename, "interface")){
+						// 						implementNode.setImplementRelToClass(classNode);
+						// 					}else{
+						// 						implementNode.createNode(implemInterfaceName, implemPackagename, "interface");
+						// 						implementNode.setImplementRelToClass(classNode);
+						// 					}
+						// 				}
+						// 			}									
+						// 		}else{
+						// 			classNode.createNode(nodeName, nodePackageName, "abstract");
+						// 			if(node.getSuperclassType()!=null){	
+						// 				ClassNode extendNode = new ClassNode();
+						// 				String extendClassName = node.getSuperclassType().resolveBinding().getName();
+						// 				String extendPackageName = node .getSuperclassType().resolveBinding().getPackage().getName();
+						// 				if(extendNode.checkNodeExist(extendClassName, extendPackageName, "interface")){
+						// 					extendNode.setExtendRelToClass(classNode);
+						// 				}else{
+						// 					extendNode.createNode(extendClassName, extendPackageName, "interface");
+						// 					extendNode.setExtendRelToClass(classNode);
+						// 				}
+						// 			}
+						// 			if(node.superInterfaceTypes().isEmpty()){								
+						// 			}else{
+						// 				ClassNode implementNode = new ClassNode();
+						// 				for(ITypeBinding iter1 : node.resolveBinding().getInterfaces()){
+						// 					String implemInterfaceName = iter1.getName();
+						// 					String implemPackagename = node.resolveBinding().getPackage().getName();
+						// 					if(implementNode.checkNodeExist(implemInterfaceName, implemPackagename, "interface")){
+						// 						implementNode.setImplementRelToClass(classNode);
+						// 					}else{
+						// 						implementNode.createNode(implemInterfaceName, implemPackagename, "interface");
+						// 						implementNode.setImplementRelToClass(classNode);
+						// 					}
+						// 				}
+						// 			}	
+						// 		}
+						// 	flag = false;
+						// 	}
+						// }
+						
 						//node is a class
 //							System.out.println(node.getSuperclassType().resolveBinding().getPackage().getName());
 							if(classNode.checkNodeExist(nodeName, nodePackageName, "class")){
@@ -171,6 +237,7 @@ public class Requestor extends FileASTRequestor {
 										}
 									}
 								}
+								
 								classNode.setContainRelToClass(projNode);
 							}else{
 								classNode.createNode(nodeName, nodePackageName, "class");
@@ -201,14 +268,29 @@ public class Requestor extends FileASTRequestor {
 									}
 								}	
 							}
-						System.out.println("ClassDec_name:"+node.getName());
+
+
+						System.out.println("Class:"+node.getName());
+//						if(packagename.equals("")){
+//							System.out.println("Class_packagename:src");
+//							classNode.createNode(node.getName().getFullyQualifiedName(), packagename, "class");
+//						}else{
+//							System.out.println("Class_packagename:"+packagename);	
+//							classNode.createNode(node.getName().getFullyQualifiedName(), packagename, "class");
+//						}
+//						if(classNode.checkNodeExist(nodeName, nodePackageName, "class")){
+//						}else{							
+//						    classNode.createNode(node.getName().getFullyQualifiedName(), nodePackageName, "class");
+//						}
 						System.out.println("\n");
 					}
 					classNode.setParseState();
-					//}
+					}
 					return true;
 				}
 //		
+  
+
 				//Show method invocation 
 				public boolean visit(MethodInvocation node){
 					String MCallLexeme = node.getName().getIdentifier();
@@ -221,7 +303,7 @@ public class Requestor extends FileASTRequestor {
 							ArrayList<String> paramList = new ArrayList<String>();
 							for(ITypeBinding iter : node.resolveMethodBinding().getParameterTypes()){
 								paramList.add(iter.getQualifiedName());
-								System.out.println("MethodInvocation_paramList:"+iter.getQualifiedName());
+								System.out.println("paramList:"+iter.getQualifiedName());
 								}
 							String [] paramArray;
 							paramArray=(String[])paramList.toArray(new String[paramList.size()]);
@@ -240,7 +322,7 @@ public class Requestor extends FileASTRequestor {
 							ArrayList<String> paramList = new ArrayList<String>();
 							for(ITypeBinding iter : node.resolveMethodBinding().getParameterTypes()){
 								paramList.add(iter.getQualifiedName());
-								System.out.println("MethodInvocation_paramList:"+iter.getQualifiedName());
+								System.out.println("paramList:"+iter.getQualifiedName());
 								}
 							String [] paramArray;
 							paramArray=(String[])paramList.toArray(new String[paramList.size()]);
@@ -299,43 +381,44 @@ public class Requestor extends FileASTRequestor {
 					 System.out.println("\nMethodDeclaration:");
 //					 MethodNode methodnode = new MethodNode();
 				     String methodName=node.getName().getFullyQualifiedName();  
-				     System.out.println("MethodDec_name:"+methodName); 
+				     System.out.println("method name:"+methodName); 
 //				     System.out.println(node.resolveBinding().);
-				     //get method parameters  
+				            //get method parameters  
 				     String [] param;
 				     ArrayList<String> tempParam = new ArrayList<String>();
-//				     try{
-				     IMethodBinding binding = node.resolveBinding();
-					     for(ITypeBinding iter : binding.getParameterTypes()){
+				     try{
+					     for(ITypeBinding iter : node.resolveBinding().getParameterTypes()){
 					    	if(!iter.getQualifiedName().equals(null))
 					    	tempParam.add(iter.getQualifiedName());
 					     } 
-//				     }catch(Exception e){
-//				    	 System.out.println("There is a exception because of inner class!");
-//				    	 return true;
-//				     }
-				     param = (String[])tempParam.toArray(new String[tempParam.size()]);
-				     for(int i =0;i<param.length;i++){
-				    	 System.out.println("MethodDec_parameters:"+param[i]); 	 
+				     }catch(Exception e){
+				    	 System.out.println("There is a exception because of inner class!");
+				    	 return true;
 				     }
-			         //get method return type  
-				     Type returnType=node.getReturnType2();  
-				     System.out.println("MethodDec_return type:"+returnType); 
-			            
-				     //get method modifiers
-				     List modifiers=node.modifiers();
-				     System.out.println("MethodDec_modifiers:" + modifiers);
-				     
-				     //检查方法节点是否建立，如果没有则建立，如果有则将方法节点和类节点建立contain关系
+				     param = (String[])tempParam.toArray(new String[tempParam.size()]);
+				     System.out.println("method parameters:"+param); 
 				     if(methodNode.checkNodeExist(methodName, param, classNode)){
 					     methodNode.setContainRelToMethod(classNode);
 				     }else{
 				    	 methodNode.createNode(methodName,param);
 				    	 methodNode.setContainRelToMethod(classNode);
 				     }
+//				     for(Object iter : param){
+//				    	 iter.
+//				     }
+				            //get method return type  
+				     Type returnType=node.getReturnType2();  
+				     System.out.println("method return type:"+returnType); 
+				            
+				            //get method modifiers
+				     List modifiers=node.modifiers();
+				     System.out.println("method modifiers:" + modifiers);
+				     System.out.println("\n");
 					return true;
-}					 			
-			});		  		
+}
+//					 			
+			});
+			  		
 	    	super.acceptAST(sourceFilePath, ast);
 	}
 	

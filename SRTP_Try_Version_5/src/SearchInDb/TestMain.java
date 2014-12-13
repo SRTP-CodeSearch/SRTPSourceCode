@@ -17,14 +17,23 @@ public class TestMain {
 //		SearchInDb.prepare();
 		SearchClass sc= new SearchClass();
 		SearchMethod sm=new SearchMethod();
+		SearchProject sp=new SearchProject();
 		ArrayList<Node> test=new ArrayList<Node>();
-		test=sm.searchByName("main"); 
-		System.out.println(test.get(0).getId());
-		//System.out.println(test.get(1).getId());
-		String he=sm.getFileLocation(test.get(0));
-		System.out.println(he);
-		File f= new File(he);
-		System.out.println(readFileToString(sm.getFileLocation(test.get(0))));
+		test=sm.searchByName("EventObject"); 
+		for(int i=0;i<test.size();i++){
+			System.out.println(test.size());
+			System.out.println(test.get(i).getId());			
+			if(sm.validateParseState(test.get(i))){
+				String he=sm.getFileLocation(test.get(i));
+				System.out.println(he);
+				File f= new File(he);
+				System.out.println(readFileToString(sm.getFileLocation(test.get(1))));
+			}
+			else{
+				System.out.println("this method hasn't been parsed");
+			}
+		}
+
 //		Label label = DynamicLabel.label( "method" );
 //		try ( Transaction tx = SearchInDb.graphDb.beginTx())
 //		{

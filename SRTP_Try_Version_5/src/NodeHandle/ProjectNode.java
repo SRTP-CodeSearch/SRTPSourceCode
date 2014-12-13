@@ -28,7 +28,7 @@ public class ProjectNode extends MyNode {
 		thisNode.setProperty( "fileLocation", fileLocation );
 		thisNode.setProperty("parseState",false);
 		thisNode.setProperty("type", "project");
-		System.out.println( "ProjectNode-name:"+projectName+" created" );
+		System.out.println( "projectNode created" );
 		tx.success();
 		}
 		return thisNode;
@@ -40,7 +40,7 @@ public class ProjectNode extends MyNode {
 		{
 		for ( Node node : graphDb.findNodesByLabelAndProperty( label, "projectName", projectName ) )
 		{
-			if(node!=null&&node.getProperty("fileLocation")==fileLocation){
+			if(node!=null&&node.getProperty("fileLocation").equals(fileLocation)){
 				this.thisNode=node;
 				return true;
 			}

@@ -23,14 +23,10 @@ public class TestMain {
 		MethodNode methNode2 = new MethodNode();	
 		ProjectNode proNode = new ProjectNode();
 		ClassNode claNode = new ClassNode();
-		methNode1.createNode("helloworldmain");
-		methNode2.createNode("invoker");	
+	
 		claNode.createNode("Helloworld", "dongdongge", "class");
 		proNode.createNode("Helloworld", "D:/helloworld");
-		if(methNode1.checkNodeExist("helloworldmain")){
-			methNode1.setInvokeRelToMethod(methNode2);
-			methNode1.setContainRelToMethod(claNode);			
-		}
+
 		if(claNode.checkNodeExist("Helloworld", "dongdongge", "class")){
 			if(proNode.checkNodeExist("Helloworld", "D:/helloworld")){
 				claNode.setContainRelToClass(proNode);

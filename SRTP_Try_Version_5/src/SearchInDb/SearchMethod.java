@@ -38,6 +38,20 @@ public class SearchMethod extends SearchInDb {
 		return resultNodes;
 		
 		}
+	//验证函数是否被解析
+	public boolean validateParseState(Node node){
+		try(Transaction tx = graphDb.beginTx()){
+			if(node.getProperty("parseState").equals(true)){
+				tx.success();
+				return true;
+			}
+			else{
+				tx.success();
+				return false;
+			}
+		}
+
+	}
 	//find the methods which invoke this method
 	public ArrayList<Node> searchInvokerMethod(Node methodNode){
 		//wait to be check null or ""
@@ -110,7 +124,7 @@ public class SearchMethod extends SearchInDb {
 			String packageName=(String)classNode.getProperty("packageName");
 			packageName=packageName.replace('.', '\\');
 			String fileLocation=(String) proNode.getProperty("fileLocation");
-			String classLocation=fileLocation+'\\'+"src"+'\\'+packageName+'\\'+(String)classNode.getProperty("className")+".java";	
+			String classLocation=fileLocation+'\\'+'\\'+packageName+'\\'+(String)classNode.getProperty("className")+".java";	
 			return classLocation;
 			}
 		}

@@ -32,7 +32,7 @@ public class MethodNode extends MyNode {
 		thisNode.setProperty("parseState",false);
 		thisNode.setProperty("param", param);
 		thisNode.setProperty("type", "method");
-		System.out.println( "MethodNode-name:" + methodName + " created" );
+		System.out.println( "methodNode created" );
 		tx.success();
 		
 		}

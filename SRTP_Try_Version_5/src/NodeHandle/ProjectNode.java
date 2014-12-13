@@ -28,7 +28,7 @@ public class ProjectNode extends MyNode {
 		thisNode.setProperty( "fileLocation", fileLocation );
 		thisNode.setProperty("parseState",false);
 		thisNode.setProperty("type", "project");
-		System.out.println( "ProjectNode-name:"+projectName+" created" );
+		System.out.println( "projectNode created" );
 		tx.success();
 		}
 		return thisNode;

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class DeleteFile {
 	public static void main(String argv[]) throws IOException {
-		File f = new File("H:/Crawler/asf");
+		File f = new File("E:/SourceCode/Crawler/asf/JDK");
 		File[] files = f.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			System.out.println(files[i].getCanonicalPath());

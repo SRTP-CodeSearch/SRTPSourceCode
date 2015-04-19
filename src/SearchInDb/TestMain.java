@@ -19,12 +19,16 @@ public class TestMain {
 		SearchMethod sm = new SearchMethod();
 		SearchProject sp = new SearchProject();
 		ArrayList<Node> resultOfCode = new ArrayList<Node>();
-		resultOfCode = sm.searchByName("println");
+		resultOfCode = sc.searchByName("HashSet");
 		System.out.println("We found " + resultOfCode.size()
 				+ " result(s) matching :");
 		for (Node iter : resultOfCode){
 			System.out.println(iter.getId());
-			sm.getContainClass(iter);
+			try (Transaction tx = SearchInDb.graphDb.beginTx()) {
+				System.out.println(iter.getProperty("parseState"));
+				tx.success();
+			}
+			//sm.getContainClass(iter);
 		}
 
 		// for(Node iter: resultOfCode){

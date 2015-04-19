@@ -20,8 +20,8 @@ import Node.RelMap.PairsOfNode;
 public class ParseMain extends MyNode  {
 	// All classPathEntries
 	public static ArrayList<String> classPathEntries;
-	// All classPath
-	public static String classPathEntriesLocation = "C:/SRTP/AllLibs";
+//	// All classPath
+//	public static String classPathEntriesLocation = "C:/SRTP/AllLibs";
 	// Every project sourcePath
 	public static ArrayList<String> sourcePath;
 	// ProjectNode Set
@@ -65,7 +65,7 @@ public class ParseMain extends MyNode  {
 
 		// String AllProjectsFileLocation = "C:/SRTP/SimpleProject";
 
-		String AllProjectsFileLocation = "H:/Crawler/asf";
+		String AllProjectsFileLocation = "E:/SourceCode/Crawler/asf";
 		ParseMain parsemain = new ParseMain();
 		parsemain.parseProjects(AllProjectsFileLocation);
 		System.out.println(Requestor.enumBindingException);
@@ -124,7 +124,8 @@ public class ParseMain extends MyNode  {
 			if (f.isDirectory()) {
 				String[] sourcePathEntries = new String[1];
 				sourcePathEntries[0] = f.getCanonicalPath();
-				getClassPath(new File(classPathEntriesLocation));
+				getClassPath(new File(f.getCanonicalPath()+"/lib.txt"));
+				getClassPathFromLocal(f);
 				sourcePath = new ArrayList<String>();
 				sourcePath.clear();
 				ParseFilesInDir(new File(f.getCanonicalPath()));
@@ -149,16 +150,27 @@ public class ParseMain extends MyNode  {
 				ParseMain.createUseClassRel();
 				ParseMain.createExtendClassRel();
 				ParseMain.createImpleInterfaceRel();
-				projectNodeMap = new ProjectNodeMap();
-				classNodeMap = new ClassNodeMap();
-				methodNodeMap = new MethodNodeMap();
-				containMethodMap = new RelMap();
-				containClassMap = new RelMap();
-				invokeMethodMap = new RelMap();
-				useClassMap = new RelMap();
-				impleInterfaceMap = new RelMap();
-				extendClassMap = new RelMap();
+				//每次解析一个新的工程重新指定对象，交给垃圾回收机制处理
+//				projectNodeMap = new ProjectNodeMap();
+//				classNodeMap = new ClassNodeMap();
+//				methodNodeMap = new MethodNodeMap();
+//				containMethodMap = new RelMap();
+//				containClassMap = new RelMap();
+//				invokeMethodMap = new RelMap();
+//				useClassMap = new RelMap();
+//				impleInterfaceMap = new RelMap();
+//				extendClassMap = new RelMap();
+				projectNodeMap.projectNodeMap.clear();
+				classNodeMap.classNodeMap.clear();
+				methodNodeMap.methodNodeMap.clear();
+				containMethodMap.containRelMap.clear();
+				containClassMap.containRelMap.clear();
+				invokeMethodMap.containRelMap.clear();
+				useClassMap.containRelMap.clear();
+				impleInterfaceMap.containRelMap.clear();
+				extendClassMap.containRelMap.clear();
 				// 工程节点同class的contain关系当 class重复的时候 依然建立关系
+				
 				System.gc();
 
 			}
@@ -185,6 +197,11 @@ public class ParseMain extends MyNode  {
 						.findNodesByLabelAndProperty(labelIndex, "index",
 								iter.hashCode())) {
 					newNode = node;
+					if(iter.parseState){
+						newNode.setProperty("parseState", iter.parseState);
+						newNode.setProperty("fileLocation", iter.fileLocation);
+					}
+					
 				}
 				if (newNode == null) {
 					newNode = graphDb.createNode(labelName);
@@ -216,7 +233,12 @@ public class ParseMain extends MyNode  {
 				for (org.neo4j.graphdb.Node node : graphDb
 						.findNodesByLabelAndProperty(labelIndex, "index",
 								iter.hashCode())) {
+					//更新parseState
 					newNode = node;
+					if(iter.parseState){
+						newNode.setProperty("parseState", iter.parseState);
+						newNode.setProperty("fileLocation", iter.fileLocation);
+					}
 				}
 				if (newNode == null) {
 					newNode = graphDb.createNode(labelName);
@@ -252,6 +274,9 @@ public class ParseMain extends MyNode  {
 						.findNodesByLabelAndProperty(labelIndex, "index",
 								iter.hashCode())) {
 					newNode = node;
+					if(iter.parseState){
+						newNode.setProperty("parseState", iter.parseState);
+					}
 				}
 				if (newNode == null) {
 					newNode = graphDb.createNode(labelName);
@@ -486,7 +511,7 @@ public class ParseMain extends MyNode  {
 		}
 	}
 
-	public void getClassPath(File file) throws IOException {
+	public void getClassPathFromLocal(File file) throws IOException {
 		File[] files = file.listFiles();
 		if (files.length == 0) {
 			file.deleteOnExit();
@@ -494,7 +519,7 @@ public class ParseMain extends MyNode  {
 			String filePath = null;
 			for (File f : files) {
 				if (f.isDirectory()) {
-					getClassPath(f);
+					getClassPathFromLocal(f);
 				}
 				// hehe test github
 				// hehe2
@@ -502,6 +527,7 @@ public class ParseMain extends MyNode  {
 				// System.out.println(filePath);
 				if (f.isFile()) {
 					if (f.getName().toLowerCase().endsWith(".jar")) {
+						//classPathEntries.clear();
 						classPathEntries.add(filePath);
 					}
 				}
@@ -509,6 +535,31 @@ public class ParseMain extends MyNode  {
 		}
 	}
 
+	
+	public void getClassPath(File f){
+		classPathEntries.clear();
+		BufferedReader reader = null;
+		try{
+			reader = new BufferedReader(new FileReader(f));
+			String tempString = null;
+			while((tempString = reader.readLine())!=null){
+				classPathEntries.add(tempString);
+				}
+			reader.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		} finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+//		for(String classPath:classPathEntries){
+//			System.out.println(classPath);
+//		}
+	}
 	@Override
 	public void createNode() {
 		// TODO Auto-generated method stub

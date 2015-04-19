@@ -34,7 +34,7 @@ public abstract class MyNode {
 	}
 
 	public static enum RelTypes implements RelationshipType {
-		USE, INVOKE, IMPLEMENT, EXTEND, CONTAIN, CONTAINClass
+		USE, INVOKE, IMPLEMENT, EXTEND, CONTAIN, CONTAINClass,POINT
 
 	}
 

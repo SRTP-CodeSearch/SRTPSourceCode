@@ -75,6 +75,11 @@ public class ProjectParser extends AbstractParser {
 		Map complierOptions = JavaCore.getOptions();
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, complierOptions);
 		pars.setCompilerOptions(complierOptions);
-		pars.createASTs(sourcepaths, null, new String[0], requestor, null);
+//		try{
+			pars.createASTs(sourcepaths, null, new String[0], requestor, null);
+//		}catch(Exception e){
+//			
+//		}
+		
 	}
 }

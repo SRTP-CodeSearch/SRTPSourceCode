@@ -14,7 +14,8 @@ import org.neo4j.graphdb.schema.Schema;
 
 public abstract class SearchInDb {
 
-	public static String DB_PATH = "var/CodeGraphDb";
+	//public static String DB_PATH = "C:/Users/Administrator/Desktop/云计算提交版/Code-Search/数据库备份/CodeGraph2/CodeGraphDb";
+	public static String DB_PATH = "C:/Users/Administrator/Desktop/云计算提交版/Code-Search/var/CodeGraphDb";
 	public static GraphDatabaseService graphDb;
 	protected static IndexDefinition indexDefinition;
 	public Node thisNode;
@@ -46,7 +47,7 @@ public abstract class SearchInDb {
 	}
 
 	public static enum RelTypes implements RelationshipType {
-		USE, INVOKE, IMPLEMENT, EXTEND, CONTAIN
+		USE, INVOKE, IMPLEMENT, EXTEND, CONTAIN,POINT
 
 	}
 

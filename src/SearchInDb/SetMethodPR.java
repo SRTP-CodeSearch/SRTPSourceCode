@@ -100,7 +100,7 @@ public class SetMethodPR {
 		// p2[i]=d*p2[i]+(1-d)/nodeNumber;
 		// }
 		// }
-		for (int time = 0; time <= 4; time++) {
+		for (int time = 0; time <= 50; time++) {
 			for (int i = 1; i <= nodeNumber; i++) {
 				p1[i] = p2[i];
 			}

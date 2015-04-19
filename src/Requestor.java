@@ -180,8 +180,10 @@ public class Requestor extends FileASTRequestor {
 										nodePackageName, "class"));
 						if (node.getSuperclassType() != null) {
 							try {
+								//擦除泛型变量
 								String extendClassName = node.getSuperclassType()
-										.resolveBinding().getName();
+										.resolveBinding().getErasure().getName();
+								//System.out.println(extendClassName);
 								String extendClassPackageName = node
 										.getSuperclassType().resolveBinding()
 										.getPackage().getName();
@@ -210,7 +212,8 @@ public class Requestor extends FileASTRequestor {
 						if (!node.superInterfaceTypes().isEmpty()) {
 							for (ITypeBinding iter : node.resolveBinding()
 									.getInterfaces()) {
-								String implemInterfaceName = iter.getName();
+								//擦除泛型变量
+								String implemInterfaceName = iter.getErasure().getName();
 								String implemInterfacePackageName = iter
 										.getPackage().getName();
 								if (!ParseMain.classNodeMap
@@ -350,8 +353,9 @@ public class Requestor extends FileASTRequestor {
 														ParseMain.classNodeMap.lastRecentDecClassNode
 																.getString()));
 					} else {
+						//擦除泛型变量
 						String invokedClassName = node.getExpression()
-								.resolveTypeBinding().getName();
+								.resolveTypeBinding().getErasure().getName();
 						String invokedPackageName = node.getExpression()
 								.resolveTypeBinding().getPackage().getName();
 						// 检查被调用的方法所属的class是否存在,不存在则创建
